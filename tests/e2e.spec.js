@@ -412,8 +412,4 @@ test('Choose products, order and Logout', async ({page}) => {
      await expect(loginPage.getUsernameLocator()).toBeEmpty();
      await expect(loginPage.getPasswordLocator()).toBeEmpty();
 
-
-
-
-
 });
