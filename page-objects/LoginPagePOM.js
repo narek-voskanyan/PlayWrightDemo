@@ -43,4 +43,8 @@ async checkAllItemsPageURL(){
   await expect(this.page).toHaveURL('/inventory.html');
 }
 
+async checkLoginPageOpen(){
+  await expect(this.page).toHaveURL('');
+}
+
 };

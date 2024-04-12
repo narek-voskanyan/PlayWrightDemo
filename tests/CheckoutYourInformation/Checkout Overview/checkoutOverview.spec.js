@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const {LoginPage} = require('../../../page-objects/Login-page.js');
+const {LoginPage} = require('../../../page-objects/LoginPagePOM.js');
 
 
 const USERNAME = process.env.USER_NAME;
