@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 const {LoginPage} = require('../../page-objects/LoginPagePOM.js');
-
+const{Footer} = require('../../page-objects/FooterPOM.js')
 
 const USERNAME = process.env.USER_NAME;
 const PASSWORD = process.env.PASSWORD;
@@ -11,20 +11,20 @@ test('Verify that three social media webpage links, Twitter, Facebook, Linkedin,
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
-
+    const footer = new Footer(page);
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
     await loginPage.clickLoginButton();
     
     // Checking that Twitter icon visible 
-    await expect(page.locator('.social_twitter')).toBeVisible();
+    await expect(footer.twitter).toBeVisible();
 
     // Checking that Facebook icon visible
-    await expect(page.locator('.social_facebook')).toBeVisible();
+    await expect(footer.facebook).toBeVisible();
 
     // Checking that Linkedin icon visible
-    await expect(page.locator('.social_linkedin')).toBeVisible();
+    await expect(footer.linkedin).toBeVisible();
     
   });
 
@@ -33,14 +33,23 @@ test('Verify that three social media webpage links, Twitter, Facebook, Linkedin,
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
-
+    const footer = new Footer(page);
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
     await loginPage.clickLoginButton();
 
-    await expect(page.getByText('Products')).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Twitter' })).toHaveAttribute('href', "https://twitter.com/saucelabs");
+    //Check that All items page open
+    await loginPage.checkAllItemsPageURL();
+
+    const [newPage] = await Promise.all([
+      page.waitForEvent('popup'),
+      footer.twitter.click()
+    ])
+
+    await newPage.waitForLoadState();
+    await expect(newPage).toHaveURL('https://twitter.com/saucelabs');
+   
   });
 
 
@@ -48,32 +57,50 @@ test('Verify that three social media webpage links, Twitter, Facebook, Linkedin,
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
-
+    const footer = new Footer(page);
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
     await loginPage.clickLoginButton();
 
+    //Check that All items page open
+    await loginPage.checkAllItemsPageURL();
 
-    await expect(page.getByText('Products')).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Facebook' })).toHaveAttribute('href', "https://www.facebook.com/saucelabs");
-    //const a = process.env.USER_NAME
+    const [newPage] = await Promise.all([
+      page.waitForEvent('popup'),
+      footer.facebook.click()
+    ])
+
+    await newPage.waitForLoadState();
+    await expect(newPage).toHaveURL('https://www.facebook.com/saucelabs');
+   
   });
+    
+    
 
   test('Verify that clicking on the Likedin link switches to the Sauce Labs Likedin profile', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
-
+    const footer = new Footer(page);
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
     await loginPage.clickLoginButton();
 
 
-    await expect(page.getByText('Products')).toBeVisible();
-    await expect(page.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', "https://www.linkedin.com/company/sauce-labs/");
-    //const a = process.env.USER_NAME
+    //Check that All items page open
+    await loginPage.checkAllItemsPageURL();
+
+    const [newPage] = await Promise.all([
+      page.waitForEvent('popup'),
+      footer.linkedin.click()
+    ])
+
+    await newPage.waitForLoadState();
+    await expect(newPage).toHaveURL('https://www.linkedin.com/company/sauce-labs/');
+
+   
   });
 
 
@@ -81,11 +108,11 @@ test('Verify that three social media webpage links, Twitter, Facebook, Linkedin,
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
-
+    const footer = new Footer(page);
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
     await loginPage.clickLoginButton();
 
-    await expect(page.locator('.footer_copy')).toHaveText('© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy')
+    await expect(footer.footerText).toHaveText(footer.footerDescription);
   });
