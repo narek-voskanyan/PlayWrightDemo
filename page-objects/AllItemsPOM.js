@@ -5,6 +5,9 @@ exports.AllItemsPage = class AllItemsPage{
         this.page = page;
         this.shoppingCartButton = page.locator('#shopping_cart_container');
         this.filterButton = page.locator('.select_container');
+        this.swagLabstitle = page.locator('.app_logo');
+        this.productsTitle = page.locator('[data-test="title"]');
+        this.shoppingCartPageRedCircle = page.locator('.shopping_cart_badge');
     
     }
 

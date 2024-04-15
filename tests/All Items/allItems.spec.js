@@ -11,15 +11,14 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
-  
+    const allItemsPage = new AllItemsPage(page);
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
     await loginPage.clickLoginButton();
 
-
     // Check that "Swag Labs" logo exist on the page.
-    await expect(page.locator('.app_logo')).toBeVisible('Swag Labs');
+    await expect(allItemsPage.swagLabstitle).toHaveText('Swag Labs');
 
   });
 
@@ -35,13 +34,12 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
     
    
     // Check that "Products" title exist on the page.
-    await expect(page.locator('.header_secondary_container').locator('.title')).toBeVisible('Products');
+    await expect(allItemsPage.productsTitle).toHaveText('Products');
 
   });
 
 
   test('Verify that the Your Cart icon exists and, upon clicking, switches to the Your Cart page', async ({ page }) => {
-    const aaa ="hdhfjh"
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
@@ -76,8 +74,6 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
   });
 
 
-    //STUGEL TO BE VISIBLE
-
   test('Verify that the "Filter" button exists', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
@@ -97,18 +93,22 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
+    const allItemsPage = new AllItemsPage(page);
 
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
     await loginPage.clickLoginButton();
+
+    //Check that all items page open
+    await loginPage.checkAllItemsPageURL();
   
       // Click to Product button for add chosen product in "Yor cart"
     await page.locator('#add-to-cart-sauce-labs-backpack').click();
   
     // The Red Circle should appear on the "Your Cart" icon
-    await expect(page.waitForSelector('.shopping_cart_badge')).toBeTruthy();
-    await expect(page.locator('.shopping_cart_badge')).toBeVisible('1');
+    await expect(allItemsPage.shoppingCartPageRedCircle).toBeVisible();
+    await expect(allItemsPage.shoppingCartPageRedCircle).toHaveText('1');
   });
 
   // IMPORTATNT ASK TO TIGRAN  HOW TO GET CORRESPONDING LOCATOR
@@ -130,9 +130,6 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
     //Click to "Your cart" icon
     await allItemsPage.clickOnYourCarButton();
     
-    // Check that chosen product exist
-    await expect(page.waitForSelector('.bm-menu-wrap')).toBeTruthy();
-
     // Click to "Left menu bur" button for open pop-up
     await leftMenuBarPage.clickOnOpenButton();
 
@@ -149,8 +146,10 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
 
     //Click to "Your cart" icon
     await allItemsPage.clickOnYourCarButton();
+    await allItemsPage.checkYourCartURL('/cart.html');
     // Check that chosen product exist
     await expect(page.getByText('Sauce Labs Backpackcarry.')).toBeVisible();
+
   });
 
 
