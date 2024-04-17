@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
 const {LoginPage} = require('../../../page-objects/LoginPagePOM.js');
-
-
+const {CheckoutYourInfo} = require('../../../page-objects/CheckoutYourInfoPOM.js');
+const {AllItemsPage} = require('../../../page-objects/AllItemsPOM.js');
+const {YourCartPage} = require('../../../page-objects/YourCartPOM.js');
+const {LaftMenuBarPage} =require('../../../page-objects/LeftMenuBarPOM.js');
 const USERNAME = process.env.USER_NAME;
 const PASSWORD = process.env.PASSWORD;
 
@@ -9,6 +11,9 @@ test('Verify that the "Checkout: Your Information" title exists', async ({ page 
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
+    const checkoutInfo = new CheckoutYourInfo(page);
+    const allItems = new AllItemsPage(page);
+    const yourCart = new YourCartPage(page);
 
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
@@ -16,29 +21,33 @@ test('Verify that the "Checkout: Your Information" title exists', async ({ page 
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
+
     //Add product in the "Your Cart"
     await page.locator('#add-to-cart-sauce-labs-backpack').click();
     //Click on the "Your Cart" field
-    await page.locator('.shopping_cart_link').click();
+    await allItems.clickOnYourCarButton();
 
     // Check that switch to "Your Cart" page open
-    await expect(page).toHaveURL('/cart.html');
+    await allItems.checkYourCartURL('/cart.html');
 
     //Click on the "Checout" button
-    await page.locator('//button[@data-test="checkout"]').click();
+    await yourCart.clickOnCheckoutButton();
 
     // Check that switch to "Checkout: Your Information" page 
-    await expect(page).toHaveURL('/checkout-step-one.html');
+    await yourCart.checkURL('/checkout-step-one.html');
 
     //Verifay that "Checkout: Your Information" title exist
-    await expect(page.getByText("Checkout: Your Information")).toBeVisible();
+    await expect(checkoutInfo.titleOfCheckoutYourInfo).toHaveText('Checkout: Your Information');
   });
 
   test('Verify that Cancel button exist', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
+    const checkoutInfo = new CheckoutYourInfo(page);
+    const allItems = new AllItemsPage(page);
+    const yourCart = new YourCartPage(page);
 
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
@@ -46,23 +55,24 @@ test('Verify that the "Checkout: Your Information" title exists', async ({ page 
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
+
     //Add product in the "Your Cart"
     await page.locator('#add-to-cart-sauce-labs-backpack').click();
     //Click on the "Your Cart" field
-    await page.locator('.shopping_cart_link').click();
+    await allItems.clickOnYourCarButton()
 
     // Check that switch to "Your Cart" page open
-    await expect(page).toHaveURL('/cart.html');
+    await allItems.checkYourCartURL('/cart.html');
 
     //Click on the "Checout" button
-    await page.locator('//button[@data-test="checkout"]').click();
+    await yourCart.clickOnCheckoutButton();
 
     // Check that switch to "Checkout: Your Information" page 
-    await expect(page).toHaveURL('/checkout-step-one.html');
+    await yourCart.checkURL('/checkout-step-one.html');
 
-    //Verifay that "Checkout: Your Information" title exist
-    await expect(page.locator('//button[@data-test="cancel"]')).toBeVisible();
+    //Verifay that Cencel buton exist
+    await expect(checkoutInfo.cencelButton).toBeVisible();
   });
 
 
@@ -71,6 +81,9 @@ test('Verify that the "Checkout: Your Information" title exists', async ({ page 
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
+    const checkoutInfo = new CheckoutYourInfo(page);
+    const allItems = new AllItemsPage(page);
+    const yourCart = new YourCartPage(page);
 
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
@@ -78,26 +91,27 @@ test('Verify that the "Checkout: Your Information" title exists', async ({ page 
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
+
     //Add product in the "Your Cart"
     await page.locator('#add-to-cart-sauce-labs-backpack').click();
     //Click on the "Your Cart" field
-    await page.locator('.shopping_cart_link').click();
+    await allItems.clickOnYourCarButton()
 
     // Check that switch to "Your Cart" page open
-    await expect(page).toHaveURL('/cart.html');
+    await allItems.checkYourCartURL('/cart.html');
 
     //Click on the "Checout" button
-    await page.locator('//button[@data-test="checkout"]').click();
+    await yourCart.clickOnCheckoutButton();
 
     // Check that switch to "Checkout: Your Information" page 
-    await expect(page).toHaveURL('/checkout-step-one.html');
+    await yourCart.checkURL('/checkout-step-one.html');
 
     //Verifay that "Checkout: Your Information" title exist
-    await expect(page.locator('[data-test="continue"]')).toBeVisible();
+    await expect(checkoutInfo.continueButton).toBeVisible();
 
     //Check the color of "Conitnue" field
-   await expect(page.locator('[data-test="continue"]')).toHaveCSS('background-color','rgb(61, 220, 145)');
+   await expect(checkoutInfo.continueButton).toHaveCSS('background-color','rgb(61, 220, 145)');
   });
 
 
@@ -105,6 +119,9 @@ test('Verify that the "Checkout: Your Information" title exists', async ({ page 
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
+    const checkoutInfo = new CheckoutYourInfo(page);
+    const allItems = new AllItemsPage(page);
+    const yourCart = new YourCartPage(page);
 
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
@@ -112,28 +129,23 @@ test('Verify that the "Checkout: Your Information" title exists', async ({ page 
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
     //Add product in the "Your Cart"
     await page.locator('#add-to-cart-sauce-labs-backpack').click();
     //Click on the "Your Cart" field
-    await page.locator('.shopping_cart_link').click();
+    await allItems.clickOnYourCarButton();
 
     // Check that switch to "Your cart" page open
-    await expect(page).toHaveURL('/cart.html');
+    await allItems.checkYourCartURL('/cart.html');
 
     //Click on the "Checout" button
-    await page.locator('//button[@data-test="checkout"]').click();
+    await yourCart.clickOnCheckoutButton();
 
-    // Check that switch to "Checout: Your information" page 
-    await expect(page).toHaveURL('/checkout-step-one.html');
+    // Check that switch to "Checout: Your information" page
+    await yourCart.checkURL('/checkout-step-one.html');
     
-    //Click on the "Cencel button"
-    await page.locator('//button[@data-test="cancel"]').click();
-
-    // Check that switch to "Your cart" page open
-    await expect(page).toHaveURL('/cart.html');
-
-   
+    //Click on the "Cencel button" and check that corresponding URL open
+    await checkoutInfo.clickOnCencelButon();
   });
 
 
@@ -141,6 +153,9 @@ test('Verify that the "Checkout: Your Information" title exists', async ({ page 
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
+    const checkoutInfo = new CheckoutYourInfo(page);
+    const allItems = new AllItemsPage(page);
+    const yourCart = new YourCartPage(page);
 
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
@@ -148,36 +163,33 @@ test('Verify that the "Checkout: Your Information" title exists', async ({ page 
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
+    await loginPage.checkAllItemsPageURL(); 
     //Add product in the "Your Cart"
     await page.locator('#add-to-cart-sauce-labs-backpack').click();
     //Click on the "Your Cart" field
-    await page.locator('.shopping_cart_link').click();
+    await allItems.clickOnYourCarButton();
 
     // Check that switch to "Your Cart" page open
-    await expect(page).toHaveURL('/cart.html');
+    await allItems.checkYourCartURL('/cart.html');
 
     //Click on the "Checout" button
-    await page.locator('//button[@data-test="checkout"]').click();
+    await yourCart.clickOnCheckoutButton();
 
     // Check that switch to "Checkout: Your Information" page 
-    await expect(page).toHaveURL('/checkout-step-one.html');
-
-    //Verifay that "Checkout: Your Information" title exist
-    await expect(page.getByText("Checkout: Your Information")).toBeVisible();
+    await yourCart.checkURL('/checkout-step-one.html');
 
         //Fill the correct name and lastname
-        await page.locator('#first-name').fill("Name");
-        await page.locator('#last-name').fill("LastName");
+        await checkoutInfo.fillFirstName("FirstName");
+        await checkoutInfo.fillLastName("LastName");
         
         //Click on the "Continue" button
-        await page.locator('#continue').click();
+        await checkoutInfo.clickOnContionueButon();
     
         // Check that stay on "Checout: Your information" page 
-        await expect(page).toHaveURL('/checkout-step-one.html');
+        await yourCart.checkURL('/checkout-step-one.html');
 
         //Check that error message display
-        await expect(page.locator('//h3[@data-test="error"]')).toHaveText('Error: Postal Code is required');
+        await checkoutInfo.errorTextCheck('Error: Postal Code is required');
 
   });
 
@@ -186,6 +198,9 @@ test('Verify that the "Checkout: Your Information" title exists', async ({ page 
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
+    const checkoutInfo = new CheckoutYourInfo(page);
+    const allItems = new AllItemsPage(page);
+    const yourCart = new YourCartPage(page);
 
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
@@ -193,196 +208,194 @@ test('Verify that the "Checkout: Your Information" title exists', async ({ page 
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
     //Add product in the "Your Cart"
     await page.locator('#add-to-cart-sauce-labs-backpack').click();
+   
     //Click on the "Your Cart" field
-    await page.locator('.shopping_cart_link').click();
+    await allItems.clickOnYourCarButton();
 
     // Check that switch to "Your Cart" page open
-    await expect(page).toHaveURL('/cart.html');
+    await allItems.checkYourCartURL('/cart.html');
 
     //Click on the "Checout" button
-    await page.locator('//button[@data-test="checkout"]').click();
+    await yourCart.clickOnCheckoutButton();
 
     // Check that switch to "Checkout: Your Information" page 
-    await expect(page).toHaveURL('/checkout-step-one.html');
-
-    //Verifay that "Checkout: Your Information" title exist
-    await expect(page.getByText("Checkout: Your Information")).toBeVisible();
+    await yourCart.checkURL('/checkout-step-one.html');
 
         //Fill the correct lastName and ZIP/Code
         
-        await page.locator('#last-name').fill("LastName");
-        await page.locator('#postal-code').fill("Correct Zip code");
+        await checkoutInfo.fillLastName("LastName");
+        await checkoutInfo.fillZipCode("Correct Zip code");
         
         //Click on the "Continue" button
-        await page.locator('#continue').click();
+        await checkoutInfo.clickOnContionueButon();
     
         // Check that stay on "Checout: Your information" page 
-        await expect(page).toHaveURL('/checkout-step-one.html');
+        await yourCart.checkURL('/checkout-step-one.html');
 
         //Check that error message display
-        await expect(page.locator('//h3[@data-test="error"]')).toHaveText('Error: First Name is required');
+        await checkoutInfo.errorTextCheck('Error: First Name is required');
 
   });
 
 
   test('Verify that is not possible to click the "Continue. button when the Name and Zip/Post code fields are filled correctly, but Last Name field is empty', async ({ page }) => {
     
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
+   // Perform authentication steps. Sign in valid user account.
+   const loginPage = new LoginPage(page);
+   const checkoutInfo = new CheckoutYourInfo(page);
+   const allItems = new AllItemsPage(page);
+   const yourCart = new YourCartPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
-    //Add product in the "Your Cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
-    //Click on the "Your Cart" field
-    await page.locator('.shopping_cart_link').click();
+   await loginPage.goto();
+   await loginPage.fillUsernameField(USERNAME);
+   await loginPage.fillPasswordfield(PASSWORD);
+   await loginPage.clickLoginButton();
+   
+   // Check that with correct password and username the bage is opening
+   await loginPage.checkAllItemsPageURL();
+   //Add product in the "Your Cart"
+   await page.locator('#add-to-cart-sauce-labs-backpack').click();
+  
+   //Click on the "Your Cart" field
+   await allItems.clickOnYourCarButton();
 
-    // Check that switch to "Your Cart" page open
-    await expect(page).toHaveURL('/cart.html');
+   // Check that switch to "Your Cart" page open
+   await allItems.checkYourCartURL('/cart.html');
 
-    //Click on the "Checout" button
-    await page.locator('//button[@data-test="checkout"]').click();
+   //Click on the "Checout" button
+   await yourCart.clickOnCheckoutButton();
 
-    // Check that switch to "Checkout: Your Information" page 
-    await expect(page).toHaveURL('/checkout-step-one.html');
+   // Check that switch to "Checkout: Your Information" page 
+   await yourCart.checkURL('/checkout-step-one.html');
 
-    //Verifay that "Checkout: Your Information" title exist
-    await expect(page.getByText("Checkout: Your Information")).toBeVisible();
-
-        //Fill the correct lastName and ZIP/Code
-        await page.locator('#first-name').fill("Name");
-        await page.locator('#postal-code').fill("Correct Zip code");
-        
-        //Click on the "Continue" button
-        await page.locator('#continue').click();
-    
-        // Check that stay on "Checout: Your information" page 
-        await expect(page).toHaveURL('/checkout-step-one.html');
+       //Fill the correct lastName and ZIP/Code
+       
+       await checkoutInfo.fillFirstName("FirstName");
+       await checkoutInfo.fillZipCode("Correct Zip code");
+       
+       //Click on the "Continue" button
+       await checkoutInfo.clickOnContionueButon();
+   
+       // Check that stay on "Checout: Your information" page 
+       await yourCart.checkURL('/checkout-step-one.html');
 
         //Check that error message display
-        await expect(page.locator('//h3[@data-test="error"]')).toHaveText('Error: Last Name is required');
+        await checkoutInfo.errorTextCheck('Error: Last Name is required');
   });
 
 
   test('Verify that after correctly filling the Name, Last Name, and Zip/Post fields, upon clicking the "Continue" button, the page switches to the "Checkout Overview" page.', async ({ page }) => {
     
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
+     // Perform authentication steps. Sign in valid user account.
+   const loginPage = new LoginPage(page);
+   const checkoutInfo = new CheckoutYourInfo(page);
+   const allItems = new AllItemsPage(page);
+   const yourCart = new YourCartPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
-    //Add product in the "Your Cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
-    //Click on the "Your Cart" field
-    await page.locator('.shopping_cart_link').click();
+   await loginPage.goto();
+   await loginPage.fillUsernameField(USERNAME);
+   await loginPage.fillPasswordfield(PASSWORD);
+   await loginPage.clickLoginButton();
+   
+   // Check that with correct password and username the bage is opening
+   await loginPage.checkAllItemsPageURL();
+   //Add product in the "Your Cart"
+   await page.locator('#add-to-cart-sauce-labs-backpack').click();
+  
+   //Click on the "Your Cart" field
+   await allItems.clickOnYourCarButton();
 
-    // Check that switch to "Your Cart" page open
-    await expect(page).toHaveURL('/cart.html');
+   // Check that switch to "Your Cart" page open
+   await allItems.checkYourCartURL('/cart.html');
 
-    //Click on the "Checout" button
-    await page.locator('//button[@data-test="checkout"]').click();
+   //Click on the "Checout" button
+   await yourCart.clickOnCheckoutButton();
 
-    // Check that switch to "Checkout: Your Information" page 
-    await expect(page).toHaveURL('/checkout-step-one.html');
+   // Check that switch to "Checkout: Your Information" page 
+   await yourCart.checkURL('/checkout-step-one.html');
 
-    //Verifay that "Checkout: Your Information" title exist
-    await expect(page.getByText("Checkout: Your Information")).toBeVisible();
-
-        //Fill the correct lastName and ZIP/Code
-        await page.locator('#first-name').fill("Name");
-        await page.locator('#last-name').fill("LastName");
-        await page.locator('#postal-code').fill("Correct Zip code");
-        
-        //Click on the "Continue" button
-        await page.locator('#continue').click();
-    
-        // Check that stay on "Checout: Your information" page 
-        await expect(page).toHaveURL('/checkout-step-two.html');
+       //Fill the correct lastName and ZIP/Code
+       
+       await checkoutInfo.fillFirstName("FirstName");
+       await checkoutInfo.fillLastName('LastName');
+       await checkoutInfo.fillZipCode("Correct Zip code");
+       
+       //Click on the "Continue" button
+       await checkoutInfo.clickOnContionueButon();
+   
+       // Check that stay on "Checout: Your information" page 
+       await yourCart.checkURL('/checkout-step-two.html');
+       
   });
 
 
   test('Verify that clicking the "Left Menu Bar" button on the left top side of the page opens the "Left Menu Bar"', async ({ page }) => {
     
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
+     // Perform authentication steps. Sign in valid user account.
+   const loginPage = new LoginPage(page);
+   const allItems = new AllItemsPage(page);
+   const yourCart = new YourCartPage(page);
+   const leftMenuBar = new LaftMenuBarPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
-    //Add product in the "Your Cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
-    //Click on the "Your Cart" field
-    await page.locator('.shopping_cart_link').click();
+   await loginPage.goto();
+   await loginPage.fillUsernameField(USERNAME);
+   await loginPage.fillPasswordfield(PASSWORD);
+   await loginPage.clickLoginButton();
+   
+   // Check that with correct password and username the bage is opening
+   await loginPage.checkAllItemsPageURL();
+   //Add product in the "Your Cart"
+   await page.locator('#add-to-cart-sauce-labs-backpack').click();
+  
+   //Click on the "Your Cart" field
+   await allItems.clickOnYourCarButton();
 
-    // Check that switch to "Your Cart" page open
-    await expect(page).toHaveURL('/cart.html');
+   // Check that switch to "Your Cart" page open
+   await allItems.checkYourCartURL('/cart.html');
 
-    //Click on the "Checout" button
-    await page.locator('//button[@data-test="checkout"]').click();
+   //Click on the "Checout" button
+   await yourCart.clickOnCheckoutButton();
 
-    // Check that switch to "Checkout: Your Information" page 
-    await expect(page).toHaveURL('/checkout-step-one.html');
+   // Check that switch to "Checkout: Your Information" page 
+   await yourCart.checkURL('/checkout-step-one.html');
 
-    //Verifay that "Checkout: Your Information" title exist
-    await expect(page.getByText("Checkout: Your Information")).toBeVisible();
-
-    //Click on the "left menu bar" button
-   await page.locator('#react-burger-menu-btn').click();
-    //Check that "left menu bar" visible
-    await expect(page.locator('.bm-menu')).toBeVisible();
+    //Click on the "left menu bar" button and check that left menu bar open
+   await leftMenuBar.clickOnOpenButton();
 
   });
 
   test('Verify that clicking the "Your Cart" icon switches to the "Your Cart" page', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
+   const loginPage = new LoginPage(page);
+   const allItems = new AllItemsPage(page);
+   const yourCart = new YourCartPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
-    //Add product in the "Your Cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
-    //Click on the "Your Cart" field
-    await page.locator('.shopping_cart_link').click();
+   await loginPage.goto();
+   await loginPage.fillUsernameField(USERNAME);
+   await loginPage.fillPasswordfield(PASSWORD);
+   await loginPage.clickLoginButton();
+   
+   // Check that with correct password and username the bage is opening
+   await loginPage.checkAllItemsPageURL();
+   //Add product in the "Your Cart"
+   await page.locator('#add-to-cart-sauce-labs-backpack').click();
+  
+   //Click on the "Your Cart" field
+   await allItems.clickOnYourCarButton();
 
-    // Check that switch to "Your Cart" page open
-    await expect(page).toHaveURL('/cart.html');
+   // Check that switch to "Your Cart" page open
+   await allItems.checkYourCartURL('/cart.html');
 
-    //Click on the "Checout" button
-    await page.locator('//button[@data-test="checkout"]').click();
+   //Click on the "Checout" button
+   await yourCart.clickOnCheckoutButton();
 
-    // Check that switch to "Checkout: Your Information" page 
-    await expect(page).toHaveURL('/checkout-step-one.html');
+   // Check that switch to "Checkout: Your Information" page 
+   await yourCart.checkURL('/checkout-step-one.html');
 
-    //Verifay that "Checkout: Your Information" title exist
-    await expect(page.getByText("Checkout: Your Information")).toBeVisible();
-
-    //Click on the "Your cart" button
-    await page.locator("#shopping_cart_container").click();
-
-    //Chack that correspond page opened
-    await expect(page).toHaveURL('/cart.html');
-
+   await allItems.clickOnYourCarButton();
+   await allItems.checkYourCartURL('/cart.html');
   });
