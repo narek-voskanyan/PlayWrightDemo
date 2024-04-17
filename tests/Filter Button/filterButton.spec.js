@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import exp from 'constants';
 
 const {LoginPage} = require('../../page-objects/LoginPagePOM.js');
 
@@ -143,3 +144,5 @@ test('Verify that the filter field "Price (low to high)" sorts products by price
      expect(page.locator(`//div[@class="inventory_list"]//div[@class="inventory_item"][${i+1}]//div[@class='inventory_item_label']//a`)).toHaveText(titles[i]);
    }
   });
+
+ 
