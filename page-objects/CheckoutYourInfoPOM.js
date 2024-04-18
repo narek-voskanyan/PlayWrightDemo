@@ -41,4 +41,8 @@ exports.CheckoutYourInfo = class CheckoutYourInfo{
         await expect(this.zipCodeField).toHaveValue(zipCode);
     }
 
+    async checkURL(url){
+        await expect(this.page).toHaveURL(url);
+    }
+
 }
