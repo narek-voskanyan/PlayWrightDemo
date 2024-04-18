@@ -1,5 +1,5 @@
 const { expect } = require('@playwright/test');
-const exp = require('constants');
+
 
 exports.CheckoutYourInfo = class CheckoutYourInfo{
     constructor(page){
@@ -11,8 +11,6 @@ exports.CheckoutYourInfo = class CheckoutYourInfo{
         this.lastName = page.locator('#last-name');
         this.zipCodeField = page.locator('#postal-code');
         this.errorField = page.locator('//h3[@data-test="error"]');
-        
-
     }
 
     async clickOnCencelButon(){
