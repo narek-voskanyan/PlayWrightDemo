@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 const {LoginPage} = require('../../page-objects/LoginPagePOM.js');
+const {AllItemsPage} =  require('../../page-objects/AllItemsPOM.js');
+const {LaftMenuBarPage} = require('../../page-objects/LeftMenuBarPOM.js');
 
 
 const USERNAME = process.env.USER_NAME;
@@ -237,4 +239,73 @@ test('Verify that the list of products exists', async ({ page }) => {
     await expect(page.locator("//button[@class='btn btn_secondary btn_small btn_inventory '][1]")).not.toBeVisible();
     await expect(page.locator('#add-to-cart-sauce-labs-backpack')).toBeVisible();
    
+  });
+
+  test('Check that chosen product in one account is not shown in the the other account', async ({page}) => {
+    // Perform authentication steps. Sign in valid user account.
+    const loginPage = new LoginPage(page);
+    const allItems = new AllItemsPage(page);
+    const leftMenuBar = new LaftMenuBarPage(page);
+
+    await loginPage.goto();
+    await loginPage.fillUsernameField("performance_glitch_user");
+    await loginPage.fillPasswordfield(PASSWORD);
+    await loginPage.clickLoginButton();
+    
+    // Check that with correct password and username the bage is opening
+    await expect(page).toHaveURL('/inventory.html'); 
+    await expect(page.locator('#add-to-cart-sauce-labs-backpack')).toBeVisible();
+    await expect(page.locator('#add-to-cart-sauce-labs-backpack')).toHaveText('Add to cart');
+    await allItems.clickOnYourCarButton();
+    await allItems.checkYourCartURL('/cart.html');
+    await expect(page.locator('[data-test="inventory-item"]')).not.toBeVisible();
+
+    await leftMenuBar.clickOnOpenButton();
+    await leftMenuBar.clickOnLogoutButton();
+    await loginPage.checkLoginPageOpen();
+
+    //Check that username and password fields are empty
+    await expect(loginPage.username).toBeEmpty();
+    await expect(loginPage.password).toBeEmpty();
+    
+    //Sign in secon account
+    await loginPage.goto();
+    await loginPage.fillUsernameField(USERNAME);
+    await loginPage.fillPasswordfield(PASSWORD);
+    await loginPage.clickLoginButton();
+
+    // Check that with correct password and username the bage is opening
+    await expect(page).toHaveURL('/inventory.html'); 
+    //Add the product to Your cart
+    await page.locator('#add-to-cart-sauce-labs-backpack').click();
+    //Click on the Your cart button
+    await allItems.clickOnYourCarButton();
+    //Check that Your cart open 
+    await allItems.checkYourCartURL('/cart.html');
+    //Check that Your cart is not empty
+    await expect(page.locator('[data-test="inventory-item"]')).toBeVisible();
+    //Click on the left menu bar
+    await leftMenuBar.clickOnOpenButton();
+    //Click on the Logout field
+    await leftMenuBar.clickOnLogoutButton();
+    //Check that page logout from account
+    await loginPage.checkLoginPageOpen();
+
+    //Check that username and password fields are empty
+    await expect(loginPage.username).toBeEmpty();
+    await expect(loginPage.password).toBeEmpty();
+    // Sign in with first account
+    await loginPage.goto();
+    await loginPage.fillUsernameField("performance_glitch_user");
+    await loginPage.fillPasswordfield(PASSWORD);
+    await loginPage.clickLoginButton();
+    
+    // Check that with correct password and username the bage is opening
+    await expect(page).toHaveURL('/inventory.html'); 
+    await expect(page.locator('#add-to-cart-sauce-labs-backpack')).toBeVisible();
+    await expect(page.locator('#add-to-cart-sauce-labs-backpack')).toHaveText('Add to cart');
+    await allItems.clickOnYourCarButton();
+    await allItems.checkYourCartURL('/cart.html');
+    await expect(page.locator('[data-test="inventory-item"]')).not.toBeVisible();
+
   });
