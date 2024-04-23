@@ -38,7 +38,7 @@ test('Verify that the filter field "Price (low to high)" sorts products by price
 
    //Check that products to sort from low to high
    for(let i =0; i <pricesArray.length; i += 1){
-     expect(page.locator(`//div[@class="inventory_item"][${i+1}]//div[@class="inventory_item_price"]`)).toHaveText('$'+pricesArray[i] )
+    await expect(page.locator(`//div[@class="inventory_item"][${i+1}]//div[@class="inventory_item_price"]`)).toHaveText('$'+pricesArray[i] )
    }
 
   });
@@ -75,7 +75,7 @@ test('Verify that the filter field "Price (low to high)" sorts products by price
 
    //Check that products to sort from high to low
    for(let i =0; i <pricesArray.length; i += 1){
-     expect(page.locator(`//div[@class="inventory_item"][${i+1}]//div[@class="inventory_item_price"]`)).toHaveText('$'+pricesArray[i] )
+    await expect(page.locator(`//div[@class="inventory_item"][${i+1}]//div[@class="inventory_item_price"]`)).toHaveText('$'+pricesArray[i] )
    }
   });
 
@@ -108,7 +108,7 @@ test('Verify that the filter field "Price (low to high)" sorts products by price
 
    //Check that products to sort by titles from A to Z
    for(let i =0; i <titles.length; i += 1){
-     expect(page.locator(`//div[@class="inventory_list"]//div[@class="inventory_item"][${i+1}]//div[@class='inventory_item_label']//a`)).toHaveText(titles[i]);
+    await expect(page.locator(`//div[@class="inventory_list"]//div[@class="inventory_item"][${i+1}]//div[@class='inventory_item_label']//a`)).toHaveText(titles[i]);
    }
   });
 
@@ -141,7 +141,7 @@ test('Verify that the filter field "Price (low to high)" sorts products by price
 
    //Check that products to sort by titles from Z to A
    for(let i =0; i <titles.length; i += 1){
-     expect(page.locator(`//div[@class="inventory_list"]//div[@class="inventory_item"][${i+1}]//div[@class='inventory_item_label']//a`)).toHaveText(titles[i]);
+     await expect(page.locator(`//div[@class="inventory_list"]//div[@class="inventory_item"][${i+1}]//div[@class='inventory_item_label']//a//div`)).toHaveText(titles[i]);
    }
   });
 

@@ -123,7 +123,7 @@ test('Verify that the "X" icon closes the "Left Menu Bar"', async ({ page }) => 
     await leftMenuBarPage.clickOnAllItems();
 
     //Check that correspond page opens
-    loginPage.checkAllItemsPageURL();
+    await loginPage.checkAllItemsPageURL();
   });
 
 
