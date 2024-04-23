@@ -1,16 +1,19 @@
 import { test, expect } from '@playwright/test';
 const {LoginPage} = require('../../page-objects/LoginPagePOM.js');
+const {GlobalPageObjectModel} = require('../../page-objects/GlobalPOM.js');
+const {ProductPersonalPage} = require('../../page-objects/ProductPersonalPagePOM.js');
 
 
 const USERNAME = process.env.USER_NAME;
 const PASSWORD = process.env.PASSWORD;
 
 
-test('Verify that the product information on the personal page matches the information about the same product on the "All Items"  page', async ({ page }) => {
+test.only('Verify that the product information on the personal page matches the information about the same product on the "All Items"  page', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
-
+    const global = new GlobalPageObjectModel(page);
+    const personalPage = new ProductPersonalPage(page);
     await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
@@ -26,25 +29,28 @@ test('Verify that the product information on the personal page matches the infor
     await page.locator('//a[@id="item_4_title_link"]//div[1]').click();
 
     //Check that page open
-    await expect(page).toHaveURL('/inventory-item.html?id=4');
+    await global.checkURL('/inventory-item.html?id=4');
+
     //Create variables for title, description, price fieldes containt values
-    const titleValu = await page.locator('//div[@class="inventory_details_name large_size"]').innerText();
-    const descriptionValue = await page.locator('//div[@class="inventory_details_desc large_size"]').innerText();
-    const costValue = await page.locator('.inventory_details_price').innerText();
+    const titleValu = await personalPage.personalPageTitleValue.innerText();
+    const descriptionValue = await personalPage.personalPageDescriptionValue.innerText();
+    const costValue = await personalPage.personalPageCostValue.innerText();
+
+    console.log(titleValu, descriptionValue, costValue )
     
     //Add product in "Your cart"
-    await page.locator('//button[@class="btn btn_primary btn_small btn_inventory"]').click();
+    await global.addToCartButton.click();
 
     //Go to Your cart page
-    await page.locator('//a[@class="shopping_cart_link"]').click();
+    await global.shoppingCartButton.click();
 
-    //Check that "Your cart" page display
-    await expect(page).toHaveURL('/cart.html');
+    //Check that "Your cart" page displa
+    await global.checkURL('/cart.html');
    
     // Check that the product fields' values on the "Products" page match the corresponding product fields' values on the "Your Cart" page
-   await expect(page.locator('.inventory_item_name').getByText(titleValu)).toBeVisible();
-   await expect(page.locator('.inventory_item_desc').getByText(descriptionValue)).toBeVisible();
-   await expect(page.locator('.inventory_item_price').getByText(costValue)).toBeVisible();
+   await expect(global.inventoryItemName).toHaveText(titleValu)
+   await expect(global.inventoryItemDescription).toHaveText(descriptionValue)
+   await expect(global.inventoryItemPrice).toHaveText(costValue)
 
   });
 
