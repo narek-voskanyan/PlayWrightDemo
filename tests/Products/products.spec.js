@@ -18,7 +18,7 @@ test('Verify that the list of products exists', async ({ page }) => {
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html'); 
+    await loginPage.checkAllItemsPageURL(); 
 
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
@@ -37,7 +37,7 @@ test('Verify that the list of products exists', async ({ page }) => {
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
 
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
@@ -80,7 +80,7 @@ test('Verify that the list of products exists', async ({ page }) => {
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html'); 
+    await loginPage.checkAllItemsPageURL(); 
 
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
@@ -103,7 +103,7 @@ test('Verify that the list of products exists', async ({ page }) => {
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
 
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
@@ -127,7 +127,7 @@ test('Verify that the list of products exists', async ({ page }) => {
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html'); 
+    await loginPage.checkAllItemsPageURL(); 
 
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
@@ -165,7 +165,7 @@ test('Verify that the list of products exists', async ({ page }) => {
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
 
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
@@ -200,7 +200,7 @@ test('Verify that the list of products exists', async ({ page }) => {
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
 
     //Check that "Swag Labs" title exist
 
@@ -219,7 +219,7 @@ test('Verify that the list of products exists', async ({ page }) => {
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html'); 
+    await loginPage.checkAllItemsPageURL(); 
 
     //Click on the "Add to cart button"
     await page.locator('#add-to-cart-sauce-labs-backpack').click();
@@ -253,7 +253,7 @@ test('Verify that the list of products exists', async ({ page }) => {
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
     await expect(page.locator('#add-to-cart-sauce-labs-backpack')).toBeVisible();
     await expect(page.locator('#add-to-cart-sauce-labs-backpack')).toHaveText('Add to cart');
     await allItems.clickOnYourCarButton();
@@ -275,7 +275,7 @@ test('Verify that the list of products exists', async ({ page }) => {
     await loginPage.clickLoginButton();
 
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
     //Add the product to Your cart
     await page.locator('#add-to-cart-sauce-labs-backpack').click();
     //Click on the Your cart button
@@ -301,7 +301,7 @@ test('Verify that the list of products exists', async ({ page }) => {
     await loginPage.clickLoginButton();
     
     // Check that with correct password and username the bage is opening
-    await expect(page).toHaveURL('/inventory.html'); 
+    await loginPage.checkAllItemsPageURL();
     await expect(page.locator('#add-to-cart-sauce-labs-backpack')).toBeVisible();
     await expect(page.locator('#add-to-cart-sauce-labs-backpack')).toHaveText('Add to cart');
     await allItems.clickOnYourCarButton();
