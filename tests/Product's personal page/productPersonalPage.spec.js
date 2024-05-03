@@ -8,7 +8,7 @@ const USERNAME = process.env.USER_NAME;
 const PASSWORD = process.env.PASSWORD;
 
 
-test.only('Verify that the product information on the personal page matches the information about the same product on the "All Items"  page', async ({ page }) => {
+test('Verify that the product information on the personal page matches the information about the same product on the "All Items"  page', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
