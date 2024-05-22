@@ -2,23 +2,15 @@ import { test, expect } from '@playwright/test';
 const {LoginPage} = require('../../page-objects/LoginPagePOM.js');
 const {LaftMenuBarPage} = require('../../page-objects/LeftMenuBarPOM.js');
 
-const USERNAME = process.env.USER_NAME;
-const PASSWORD = process.env.PASSWORD;
 // check X click()
+test.beforeEach(async ({page}) =>{
+  await page.goto('/inventory.html')
+})
 
 test('Verify that the "X" icon closes the "Left Menu Bar"', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
+   
     const leftMenuBarPage = new LaftMenuBarPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-
-    //Check that All items page open
-    await loginPage.checkAllItemsPageURL();
     //Click on Left menu bar open button
     await leftMenuBarPage.clickOnOpenButton();
     //Click on the X button
@@ -29,18 +21,7 @@ test('Verify that the "X" icon closes the "Left Menu Bar"', async ({ page }) => 
   test('Verufy that "All Items", "About", "Logout", "Reset App Stoate", and "X" fiels exista"', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
     const leftMenuBarPage = new LaftMenuBarPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    // Wait until the page receives the cookies.
-   
-    //Check that All items page open
-    await loginPage.checkAllItemsPageURL();
-
     //Click on Left menu bar open button
     await leftMenuBarPage.clickOnOpenButton();
     
@@ -64,15 +45,6 @@ test('Verify that the "X" icon closes the "Left Menu Bar"', async ({ page }) => 
     const loginPage = new LoginPage(page);
     const leftMenuBarPage = new LaftMenuBarPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-   
-    //Check that All items page open
-    await loginPage.checkAllItemsPageURL();
-
     //Click on Left menu bar open button
     await leftMenuBarPage.clickOnOpenButton();
     
@@ -87,14 +59,7 @@ test('Verify that the "X" icon closes the "Left Menu Bar"', async ({ page }) => 
   test('Verify that "About" menu item redirects to the "SouceLabst" web application "https://saucelabs.com/"', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
     const leftMenuBarPage = new LaftMenuBarPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-   
     // Click to "Left menu bur" button for open pop-up
     await leftMenuBarPage.clickOnOpenButton();
   
@@ -110,11 +75,6 @@ test('Verify that the "X" icon closes the "Left Menu Bar"', async ({ page }) => 
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
     const leftMenuBarPage = new LaftMenuBarPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
    
     // Click to "Left menu bur" button for open pop-up
     await leftMenuBarPage.clickOnOpenButton();
@@ -128,16 +88,8 @@ test('Verify that the "X" icon closes the "Left Menu Bar"', async ({ page }) => 
 
 
   test('"Verify that the "Reset App State" menu item removes all items from "Your Cart"', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
     const leftMenuBarPage = new LaftMenuBarPage(page);
-    
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-   
+
     //Click on the "Add to cart" button in the "Sauce Labs Backpack" product field
     await page.locator("#add-to-cart-sauce-labs-backpack").click();
 

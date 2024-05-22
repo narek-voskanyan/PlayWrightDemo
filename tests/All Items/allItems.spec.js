@@ -7,15 +7,20 @@ const {AllItemsPage} = require('../../page-objects/AllItemsPOM.js');
 const USERNAME = process.env.USER_NAME;
 const PASSWORD = process.env.PASSWORD;
 
+test.beforeEach(async ({page}) =>{
+  await page.goto('/inventory.html')
+})
+
 test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
     const allItemsPage = new AllItemsPage(page);
-    await loginPage.goto();
+   /*  await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
+    await loginPage.clickLoginButton(); */
+    
 
     // Check that "Swag Labs" logo exist on the page.
     await expect(allItemsPage.swagLabstitle).toHaveText('Swag Labs');
@@ -27,10 +32,10 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
     const allItemsPage = new AllItemsPage(page);
-    await loginPage.goto();
+    /* await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
+    await loginPage.clickLoginButton(); */
     
    
     // Check that "Products" title exist on the page.
@@ -44,10 +49,10 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
     const allItemsPage = new AllItemsPage(page);
-    await loginPage.goto();
+   /*  await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
+    await loginPage.clickLoginButton(); */
     //Check that All itames page open
     await loginPage.checkAllItemsPageURL();
     //Click to "Your cart" icon
@@ -63,10 +68,10 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
     const leftMenuBarPage = new LaftMenuBarPage(page); 
-    await loginPage.goto();
+    /* await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
+    await loginPage.clickLoginButton(); */
   
     // Click to "Left menu bur" button for open pop-up
    await leftMenuBarPage.clickOnOpenButton();
@@ -79,10 +84,10 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
     // Perform authentication steps. Sign in valid user account.
     const loginPage = new LoginPage(page);
     const allItemsPage = new AllItemsPage(page);
-    await loginPage.goto();
+    /* await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
+    await loginPage.clickLoginButton(); */
   
     // Check that Filter buton exist
    await expect(allItemsPage.filterButton).toBeVisible();
@@ -95,10 +100,10 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const allItemsPage = new AllItemsPage(page);
 
-    await loginPage.goto();
+    /* await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
+    await loginPage.clickLoginButton(); */
 
     //Check that all items page open
     await loginPage.checkAllItemsPageURL();
@@ -119,10 +124,10 @@ test('Verify that "Swag Labs" title exist on page', async ({ page }) => {
     const allItemsPage = new AllItemsPage(page);
     const leftMenuBarPage = new LaftMenuBarPage(page); 
 
-    await loginPage.goto();
+    /* await loginPage.goto();
     await loginPage.fillUsernameField(USERNAME);
     await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
+    await loginPage.clickLoginButton(); */
   
     // Click to Product button for add chosen product in "Yor cart"
     await page.locator('#add-to-cart-sauce-labs-backpack').click();

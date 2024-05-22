@@ -1,21 +1,17 @@
 import { test, expect } from '@playwright/test';
-import exp from 'constants';
 
-const {LoginPage} = require('../../page-objects/LoginPagePOM.js');
 
-const USERNAME = process.env.USER_NAME;
-const PASSWORD = process.env.PASSWORD;
+
+test.beforeEach(async ({page}) =>{
+  await page.goto('/inventory.html')
+})
 
 test('Verify that the filter field "Price (low to high)" sorts products by price from low to high', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
+
+   
     //Check that corresponding page opened  
     await expect(page).toHaveURL('/inventory.html');
 
@@ -45,15 +41,7 @@ test('Verify that the filter field "Price (low to high)" sorts products by price
 
 
   test('Verify that the filter field "Price (high to low)" sorts products by price from high to low', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
+   
     //Check that corresponding page opened  
     await expect(page).toHaveURL('/inventory.html');
 
@@ -82,15 +70,6 @@ test('Verify that the filter field "Price (low to high)" sorts products by price
 
 
   test('Verify that the filter field "Name (A to Z)" sorts products from A to Z', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
     //Check that corresponding page opened  
     await expect(page).toHaveURL('/inventory.html');
 
@@ -114,14 +93,6 @@ test('Verify that the filter field "Price (low to high)" sorts products by price
 
 
   test('Verify that the filter field "Name (Z to A)" sorts products from Z to A', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
     
     //Check that corresponding page opened  
     await expect(page).toHaveURL('/inventory.html');

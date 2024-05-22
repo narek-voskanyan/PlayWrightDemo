@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const {LoginPage} = require('../../page-objects/LoginPagePOM.js');
+test.use({ storageState: { cookies: [], origins: [] } });
 
 const USERNAME = process.env.USER_NAME;
 const PASSWORD = process.env.PASSWORD;

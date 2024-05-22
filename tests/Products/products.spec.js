@@ -6,20 +6,12 @@ const {LaftMenuBarPage} = require('../../page-objects/LeftMenuBarPOM.js');
 
 const USERNAME = process.env.USER_NAME;
 const PASSWORD = process.env.PASSWORD;
+test.beforeEach(async ({page}) =>{
+  await page.goto('/inventory.html')
+})
 
 test('Verify that the list of products exists', async ({ page }) => {
     
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await loginPage.checkAllItemsPageURL(); 
-
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
    
@@ -27,18 +19,7 @@ test('Verify that the list of products exists', async ({ page }) => {
 
 
   test('Verify that the text on the "Add to Cart" button changes to "Remove" after clicking on it, and returns to the original text after a second click', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await loginPage.checkAllItemsPageURL();
-
+ 
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
 
@@ -70,18 +51,7 @@ test('Verify that the list of products exists', async ({ page }) => {
 
 
   test('Verify that the titles of the products are accurate references', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await loginPage.checkAllItemsPageURL(); 
-
+  
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
     //Click on title of product
@@ -93,18 +63,7 @@ test('Verify that the list of products exists', async ({ page }) => {
 
   
   test('Verify that the product photo are accurate reference', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await loginPage.checkAllItemsPageURL();
-
+   
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
    
@@ -117,18 +76,7 @@ test('Verify that the list of products exists', async ({ page }) => {
 
 
   test('Verify that products display a title, product photo, description, price, and an "Add to Cart" button.', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await loginPage.checkAllItemsPageURL(); 
-
+   
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
     
@@ -155,17 +103,6 @@ test('Verify that the list of products exists', async ({ page }) => {
 
 
   test('Verify that the "Add to Cart" button add the peoduct in "Your Cart" and secont time click should remove product from "Your cart"', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await loginPage.checkAllItemsPageURL();
 
     //Check that list of products field exist
     await expect(page.locator('.inventory_list')).toBeVisible();
@@ -190,36 +127,14 @@ test('Verify that the list of products exists', async ({ page }) => {
   });
 
   test('Verify that "Swag Labs" title exist on the top of page', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await loginPage.checkAllItemsPageURL();
+ 
 
     //Check that "Swag Labs" title exist
-
     await expect(page.locator('.app_logo')).toHaveText('Swag Labs');
    
   });
   // Wright bag report
   test('Verify that after clicking the "Reset App State" button, all buttons for chosen products change back from "Remove" to "Add to cart"', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await loginPage.checkAllItemsPageURL(); 
 
     //Click on the "Add to cart button"
     await page.locator('#add-to-cart-sauce-labs-backpack').click();

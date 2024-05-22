@@ -4,22 +4,13 @@ const {CheckoutYourInfo} = require('../../../page-objects/CheckoutYourInfoPOM.js
 const {AllItemsPage} = require('../../../page-objects/AllItemsPOM.js');
 const {YourCartPage} = require('../../../page-objects/YourCartPOM.js');
 const {LaftMenuBarPage} =require('../../../page-objects/LeftMenuBarPOM.js');
-const USERNAME = process.env.USER_NAME;
-const PASSWORD = process.env.PASSWORD;
 
 test.beforeEach(async ({page}) => {
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
+    await page.goto('/inventory.html')
     const allItems = new AllItemsPage(page);
     const yourCart = new YourCartPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-    // Check that with correct password and username the bage is opening
-    await loginPage.checkAllItemsPageURL();
 
     //Add product in the "Your Cart"
     await page.locator('#add-to-cart-sauce-labs-backpack').click();

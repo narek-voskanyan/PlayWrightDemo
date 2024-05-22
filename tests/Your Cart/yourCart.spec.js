@@ -4,19 +4,16 @@ const {YourCartPage} = require('../../page-objects/YourCartPOM.js');
 const {AllItemsPage} = require('../../page-objects/AllItemsPOM.js');
 
 
-const USERNAME = process.env.USER_NAME;
-const PASSWORD = process.env.PASSWORD;
+test.beforeEach(async ({page}) =>{
+  await page.goto('/inventory.html')
+})
 
 test('Verify that the "Your Cart" page contains QTY, Description tittels, "Continoe Shopping", "Checout" buttons', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
     const allitems = new AllItemsPage(page);
     const yourCartPage = new YourCartPage(page);
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
+  
     
     //Click on the "Your cart" field
     await allitems.clickOnYourCarButton();
@@ -44,14 +41,8 @@ test('Verify that the "Your Cart" page contains QTY, Description tittels, "Conti
   test('Verify that the "Continue Shopping" button switch to "Aii items/Products" page', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
     const allitems = new AllItemsPage(page);
     const yourCartPage = new YourCartPage(page);
-
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
     
     //Click on the "Your cart" field
     await allitems.clickOnYourCarButton();
@@ -68,15 +59,9 @@ test('Verify that the "Your Cart" page contains QTY, Description tittels, "Conti
   test('Verify that upon clicking the "Checkout" button, the "Checkout: Your Information" page should be displayed', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
     const allitems = new AllItemsPage(page);
     const yourCartPage = new YourCartPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
       //Click on the "Your cart" field
      await allitems.clickOnYourCarButton();
     //Check that the "Your Cart" page open
@@ -96,13 +81,8 @@ test('Verify that the "Your Cart" page contains QTY, Description tittels, "Conti
   test('Verify that the "Remove" button in the selected product field on the "Your Cart" page successfully removes the product from "Your Cart"', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-    const allitems = new AllItemsPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
+    const allitems = new AllItemsPage(page);
 
      //Add the product into Your cart
      await page.locator('#add-to-cart-sauce-labs-backpack').click();
@@ -128,16 +108,9 @@ test('Verify that the "Your Cart" page contains QTY, Description tittels, "Conti
   test('Verify that it is not possible to click on the "Checkout" button without selecting any product(s)', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
     const allitems = new AllItemsPage(page);
     const yourCartPage = new YourCartPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-
-     
     //Click on the "Your cart" field
     await allitems.clickOnYourCarButton();
     //Check that the "Your Cart" page open
@@ -155,15 +128,8 @@ test('Verify that the "Your Cart" page contains QTY, Description tittels, "Conti
   test('Verify that the product information on the Your cart page matches the information about the same product on the "Products"  page', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-    const allitems = new AllItemsPage(page);
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
 
-     // Check that corrent page open
-     await loginPage.checkAllItemsPageURL();
+    const allitems = new AllItemsPage(page);
 
      //Take title, description and price value from product
      const title = await page.locator("#item_4_title_link").innerText();
@@ -188,15 +154,7 @@ test('Verify that the "Your Cart" page contains QTY, Description tittels, "Conti
   test('Verify that the added product(s) exist in the "Your Cart" icon on the red circle"  page', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
     const allitems = new AllItemsPage(page);
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-
-     // Check that corrent page open
-    await loginPage.checkAllItemsPageURL();
      //Click on the "Add to cart" button in same product for add it to the "Your cart"
      await page.locator('#add-to-cart-sauce-labs-backpack').click();
 

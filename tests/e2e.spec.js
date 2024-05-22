@@ -2,18 +2,17 @@ import { test, expect } from '@playwright/test';
 import exp from 'constants';
 
 const {LoginPage} = require('../page-objects/LoginPagePOM.js');
-const USERNAME = process.env.USER_NAME;
-const PASSWORD = process.env.PASSWORD;
+//Before each command
+test.beforeEach(async ({page}) =>{
+     await page.goto('/inventory.html')
+   })
+
 
 test('Order products and return back to Products page', async({page}) => {
      // Perform authentication steps. Sign in valid user account.
      const loginPage = new LoginPage(page);
 
-     await loginPage.goto();
-     await loginPage.fillUsernameField(USERNAME);
-     await loginPage.fillPasswordfield(PASSWORD);
-     await loginPage.clickLoginButton();
-     
+
      // Check that "All items" page is open
      loginPage.checkAllItemsPageURL();
 
@@ -137,10 +136,6 @@ test('Order products and return back to Products page', async({page}) => {
 test('Choose products, order and Logout', async ({page}) => {
      const loginPage = new LoginPage(page);
 
-     await loginPage.goto();
-     await loginPage.fillUsernameField(USERNAME);
-     await loginPage.fillPasswordfield(PASSWORD);
-     await loginPage.clickLoginButton();
      
      // Check that "All items" page is open
      loginPage.checkAllItemsPageURL();

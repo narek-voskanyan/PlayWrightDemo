@@ -7,20 +7,10 @@ const {YourCartPage} = require('../../../../page-objects/YourCartPOM.js');
 const {LaftMenuBarPage} =require('../../../../page-objects/LeftMenuBarPOM.js');
 const {CheckoutOverview} = require('../../../../page-objects/CheckoutOverviewPOM.js');
 
-const USERNAME = process.env.USER_NAME;
-const PASSWORD = process.env.PASSWORD;
+
 
 test.beforeEach(async({page}) =>{
-  // Perform authentication steps. Sign in valid user account.
-  const loginPage = new LoginPage(page);
-
-  await loginPage.goto();
-  await loginPage.fillUsernameField(USERNAME);
-  await loginPage.fillPasswordfield(PASSWORD);
-  await loginPage.clickLoginButton();
-  // Check that with correct password and username the bage is opening
-  await loginPage.checkAllItemsPageURL();
-
+  await page.goto('/inventory.html')
 });
 
 test('Verify that the "Cancel" button exists and, upon clicking, switches to the "Products" page', async ({ page }) => {

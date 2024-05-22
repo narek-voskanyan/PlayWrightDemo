@@ -4,22 +4,14 @@ const {GlobalPageObjectModel} = require('../../page-objects/GlobalPOM.js');
 const {ProductPersonalPage} = require('../../page-objects/ProductPersonalPagePOM.js');
 
 
-const USERNAME = process.env.USER_NAME;
-const PASSWORD = process.env.PASSWORD;
-
+test.beforeEach(async ({page}) =>{
+  await page.goto('/inventory.html')
+})
 
 test('Verify that the product information on the personal page matches the information about the same product on the "All Items"  page', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
     const global = new GlobalPageObjectModel(page);
     const personalPage = new ProductPersonalPage(page);
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
-
+  
     //Create variable for product photo locator
     const locetorForProductPhoto = await page.locator('//img[@alt="Sauce Labs Backpack"]');
     //Get value from photo element "Alt" attribute
@@ -56,15 +48,7 @@ test('Verify that the product information on the personal page matches the infor
 
 
   test('Verify that the "Back to products" referenc functions as expected', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
     //Click on title chosen product for open product personal page
     await page.locator('//a[@id="item_4_title_link"]//div[1]').click();
 
@@ -81,15 +65,7 @@ test('Verify that the product information on the personal page matches the infor
 
   
   test('Verify that the text on the "Add to Cart" button changes to "Remove" after clicking on it, and returns to the original text after a second click', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
 
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-    
     //Click on title chosen product for open product personal page
     await page.locator('//a[@id="item_4_title_link"]//div[1]').click();
 

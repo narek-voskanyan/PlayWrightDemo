@@ -5,17 +5,13 @@ const{Footer} = require('../../page-objects/FooterPOM.js')
 const USERNAME = process.env.USER_NAME;
 const PASSWORD = process.env.PASSWORD;
 
-
+test.beforeEach(async ({page}) =>{
+  await page.goto('/inventory.html')
+})
 
 test('Verify that three social media webpage links, Twitter, Facebook, Linkedin, exist', async ({ page }) => {
     
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
     const footer = new Footer(page);
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
     
     // Checking that Twitter icon visible 
     await expect(footer.twitter).toBeVisible();
@@ -30,17 +26,8 @@ test('Verify that three social media webpage links, Twitter, Facebook, Linkedin,
 
 
   test('Verify that clicking on the Twitter link switches to the Sauce Labs Twitter profile', async ({ page }) => {
-    
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
-    const footer = new Footer(page);
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
 
-    //Check that All items page open
-    await loginPage.checkAllItemsPageURL();
+    const footer = new Footer(page);
 
     const [newPage] = await Promise.all([
       page.waitForEvent('popup'),
@@ -48,24 +35,16 @@ test('Verify that three social media webpage links, Twitter, Facebook, Linkedin,
     ])
 
     await newPage.waitForLoadState();
-    await expect(newPage).toHaveURL('https://twitter.com/saucelabs');
+    await expect(newPage).toHaveURL('https://x.com/saucelabs');
    
   });
 
 
   test('Verify that clicking on the Facebook link switches to the Sauce Labs Facebook profile', async ({ page }) => {
     
-    // Perform authentication steps. Sign in valid user account.
-    const loginPage = new LoginPage(page);
     const footer = new Footer(page);
-    await loginPage.goto();
-    await loginPage.fillUsernameField(USERNAME);
-    await loginPage.fillPasswordfield(PASSWORD);
-    await loginPage.clickLoginButton();
-
-    //Check that All items page open
-    await loginPage.checkAllItemsPageURL();
-
+  
+  
     const [newPage] = await Promise.all([
       page.waitForEvent('popup'),
       footer.facebook.click()
