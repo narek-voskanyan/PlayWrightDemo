@@ -19,7 +19,7 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
     const checkoutInfo = new CheckoutYourInfo(page);
     const checkoutOverview = new CheckoutOverview(page);
     //Add product to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Click on the "Your cart button"
     await allItems.clickOnYourCarButton();
@@ -65,7 +65,7 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
     const checkoutInfo = new CheckoutYourInfo(page);
     const checkoutOverview = new CheckoutOverview(page);
     //Add product to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Click on the "Your cart button"
     await allItems.clickOnYourCarButton();
@@ -113,7 +113,7 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
     const checkoutInfo = new CheckoutYourInfo(page);
     const checkoutOverview = new CheckoutOverview(page);
     //Add product to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Click on the "Your cart button"
     await allItems.clickOnYourCarButton();
@@ -154,7 +154,6 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
      
   });
 
-
   test('Verify that the price for multiple products is counted correctly', async ({ page }) => {
     const allItems = new AllItemsPage(page);
     const yourCart = new YourCartPage(page);
@@ -162,10 +161,10 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
     const checkoutOverview = new CheckoutOverview(page);
 
     //Add "Sauce Labs Backpack" to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Add "Sauce Labs Bike Light" to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-bike-light').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Click on the "Your cart button"
     await allItems.clickOnYourCarButton();
@@ -195,12 +194,12 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
     await checkoutInfo.checkURL("/checkout-step-two.html");
 
     //Get price from Sauce Labs Backpack product
-    let priceOfSauceLabsBackpack = await page.locator("//a[@id='item_4_title_link']/following-sibling::div//div").innerText();
+    let priceOfSauceLabsBackpack = await page.locator('[data-test="inventory-item-price"]').nth(0).innerText();
     let price = priceOfSauceLabsBackpack.split("$");
     let priceOfSauceLabsBackpackOnInt = (price[price.length-1])*1;
 
     //Get price from Sauce Labs Bike Light product
-    let priceOfSauceLabsBikeLight = await page.locator('//a[@id="item_0_title_link"]/following-sibling::div//div').innerText();
+    let priceOfSauceLabsBikeLight = await page.locator('[data-test="inventory-item-price"]').nth(1).innerText();
     let priceOfSauceLabsBikeLightInArray = priceOfSauceLabsBikeLight.split("$");
     let priceOfSauceLabsBikeLightOnInt = (priceOfSauceLabsBikeLightInArray[priceOfSauceLabsBikeLightInArray.length-1])*1;
     let sumOfChosenProducts = priceOfSauceLabsBackpackOnInt + priceOfSauceLabsBikeLightOnInt;
@@ -209,17 +208,16 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
 
   });
 
-
   test('Verify that "Summari info" titles exist ', async ({ page }) => {
     const allItems = new AllItemsPage(page);
     const yourCart = new YourCartPage(page);
     const checkoutInfo = new CheckoutYourInfo(page);
     const checkoutOverview = new CheckoutOverview(page);
     //Add "Sauce Labs Backpack" to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Add "Sauce Labs Bike Light" to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-bike-light').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Click on the "Your cart button"
     await allItems.clickOnYourCarButton();
@@ -262,18 +260,16 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
      await expect(checkoutOverview.totalInfoLable).toHaveText('Price Total');
   });
 
-
-
   test('Verify that the sum of chosen products and tax equals the price displayed next to the "Total" field.', async ({ page }) => {
     const allItems = new AllItemsPage(page);
     const yourCart = new YourCartPage(page);
     const checkoutInfo = new CheckoutYourInfo(page);
     const checkoutOverview = new CheckoutOverview(page);
     //Add "Sauce Labs Backpack" to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Add "Sauce Labs Bike Light" to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-bike-light').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
    //Click on the "Your cart button"
    await allItems.clickOnYourCarButton();
@@ -318,17 +314,16 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
 
   });
 
-
   test('Verify that clicking the "Left Menu Bar" button on the left top side of the page opens the "Left Menu Bar"', async ({ page }) => {
     const allItems = new AllItemsPage(page);
     const yourCart = new YourCartPage(page);
     const checkoutInfo = new CheckoutYourInfo(page);
 
     //Add "Sauce Labs Backpack" to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Add "Sauce Labs Bike Light" to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-bike-light').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Click on the "Your cart button"
     await allItems.clickOnYourCarButton();
@@ -370,10 +365,10 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
     const checkoutInfo = new CheckoutYourInfo(page);
 
     //Add "Sauce Labs Backpack" to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Add "Sauce Labs Bike Light" to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-bike-light').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Click on the "Your cart button"
     await allItems.clickOnYourCarButton();
@@ -416,7 +411,7 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
     const yourCart = new YourCartPage(page);
     const checkoutInfo = new CheckoutYourInfo(page);
     //Add "Sauce Labs Backpack" to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
 
     //Click on the "Your cart button"
@@ -447,26 +442,25 @@ test('Verify that the "Cancel" button exists and, upon clicking, switches to the
     await checkoutInfo.checkURL("/checkout-step-two.html");
     
     //Click on the title within the product field
-    await page.locator("#item_4_title_link").click();
+    await page.locator('.inventory_item_name ').nth(0).click();
 
     //Check that correspond product personal page open
     await expect(page).toHaveURL("/inventory-item.html?id=4");
 
   });
 
-
   test('Verify that all chosen products are displayed in the "Checkout: Overview" page, below the "Description" title', async ({page}) =>{
     const allItems = new AllItemsPage(page);
     const yourCart = new YourCartPage(page);
     const checkoutInfo = new CheckoutYourInfo(page);
-   //Add products to "Your cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
-    await page.locator('#add-to-cart-sauce-labs-bike-light').click();
+    //Add products to "Your cart"
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
 
     //Save title of added product
     const productTitleList = []
-    productTitleList.push(await page.locator('#item_4_title_link').innerText());
-    productTitleList.push(await page.locator('#item_0_title_link').innerText());
+    productTitleList.push(await page.locator('.inventory_item_name').nth(0).innerText());
+    productTitleList.push(await page.locator('.inventory_item_name').nth(1).innerText());
     
     //Click on the "Your cart button"
     await allItems.clickOnYourCarButton();

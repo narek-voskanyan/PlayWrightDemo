@@ -19,7 +19,7 @@ test.beforeEach(async ({page}) => {
     const checkoutOverview = new CheckoutOverview(page);
     await page.goto('/inventory.html')
     //Add product in the "Your Cart"
-    await page.locator('#add-to-cart-sauce-labs-backpack').click();
+    await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
     //Click on the "Your Cart" field
     await allItems.clickOnYourCarButton();
     // Check that switch to "Your Cart" page open
@@ -41,7 +41,6 @@ test.beforeEach(async ({page}) => {
     //Check that corrspon page open
     await checkoutOverview.checkURL('/checkout-complete.html');
 });
-
 
 test('Verify that all fields exist on the page.', async ({page}) => {
     const checkoutCompilate = new CheckoutCompilate(page);
@@ -65,7 +64,7 @@ test('Verify that clicking the "Back Home" button opens the Product page and cle
     //Click on the "Your cart" button
     await page.locator('#shopping_cart_container').click();
     //Check that in "Your cart"  there is any product
-    await expect(page.locator('//div[@class="cart_item"][1]')).not.toBeVisible();
+    await expect(page.locator('[class="cart_item"]')).not.toBeVisible();
 });
 
 test('Verify that clicking the back arrow in the browser opens the "Checkout: Overview" page, where there are no chosen products, and the Total price is 0.00', async ({page}) => {
@@ -75,9 +74,9 @@ test('Verify that clicking the back arrow in the browser opens the "Checkout: Ov
      //Check that "Checkout: Overview" page is open
      await expect(page).toHaveURL('/checkout-step-two.html');
      //Check that there is no any product
-     await expect(page.locator('//div[@class="cart_item"][1]')).not.toBeVisible();
+     await expect(page.locator('[class="cart_item"]')).not.toBeVisible();
      //Check that price is $0.00
-     await expect(page.locator('//div[@data-test="total-label"]')).toHaveText('Total: $0.00');
+     await expect(page.locator('[data-test="total-label"]')).toHaveText('Total: $0.00');
 });
 
 test('Verify that clicking the "Left Menu Bar" button on the left top side of the page opens the "Left Menu Bar"', async ({page}) => {

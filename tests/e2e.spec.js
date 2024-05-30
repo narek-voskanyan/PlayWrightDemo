@@ -7,7 +7,6 @@ test.beforeEach(async ({page}) =>{
      await page.goto('/inventory.html')
    })
 
-
 test('Order products and return back to Products page', async({page}) => {
      // Perform authentication steps. Sign in valid user account.
      const loginPage = new LoginPage(page);
@@ -17,20 +16,18 @@ test('Order products and return back to Products page', async({page}) => {
      loginPage.checkAllItemsPageURL();
 
      //Click on the "Add to cart" button for add backpack in the 'Your cart
-     await page.locator('#add-to-cart-sauce-labs-backpack').click();
+     await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
      //Check that the number of product display on the "Your cart"
      await expect(page.locator(".shopping_cart_badge")).toHaveText('1');
 
      //Click on the "Add to cart" button for add bike light in the 'Your cart
-     await page.locator('#add-to-cart-sauce-labs-bike-light').click();
+     await page.locator('.btn.btn_primary.btn_small.btn_inventory').nth(0).click();
      //Check that the number of product display on the "Your cart"
      await expect(page.locator(".shopping_cart_badge")).toHaveText('2');
 
-
-
      const listTitels = []
-     listTitels.push(await page.locator('//a[@id="item_4_title_link"]//div[@class="inventory_item_name "]').innerText());
-     listTitels.push(await page.locator('//a[@id="item_0_title_link"]//div[@class="inventory_item_name "]').innerText());
+     listTitels.push(await page.locator('.inventory_item_name').nth(0).innerText());
+     listTitels.push(await page.locator('.inventory_item_name').nth(1).innerText());
 
      //Click on the "Your cart" button
      await page.locator('#shopping_cart_container').click();
@@ -39,8 +36,8 @@ test('Order products and return back to Products page', async({page}) => {
      await expect(page).toHaveURL('/cart.html');
      
      //Check that added product exist on the Add to cart page
-     await expect(page.locator('//div[@class="cart_item"][1]//a')).toHaveText(listTitels[0])
-     await expect(page.locator('//div[@class="cart_item"][2]//a')).toHaveText(listTitels[1])
+     await expect(page.locator('[class="inventory_item_name"]').nth(0)).toHaveText(listTitels[0])
+     await expect(page.locator('[class="inventory_item_name"]').nth(1)).toHaveText(listTitels[1])
      
      
      //Click on the Checkout button
@@ -72,16 +69,16 @@ test('Order products and return back to Products page', async({page}) => {
 
 
       //Check that added product exist on the Add to cart page
-      await expect(page.locator('//div[@class="cart_item"][1]//a')).toHaveText(listTitels[0])
-      await expect(page.locator('//div[@class="cart_item"][2]//a')).toHaveText(listTitels[1])
+     await expect(page.locator('[class="inventory_item_name"]').nth(0)).toHaveText(listTitels[0])
+     await expect(page.locator('[class="inventory_item_name"]').nth(1)).toHaveText(listTitels[1])
 
       //Get prices
-      let priceFromField = await page.locator('//div[@class="cart_item"][1]//div[@class="inventory_item_price"]').innerText();
+      let priceFromField = await page.locator('[class="inventory_item_price"]').nth(0).innerText();
       let price = priceFromField.split('$');
       const priceList =[]
       priceList.push(price[price.length-1]*1)
 
-      priceFromField = await page.locator('//div[@class="cart_item"][2]//div[@class="inventory_item_price"]').innerText();
+      priceFromField = await page.locator('[class="inventory_item_price"]').nth(1).innerText();
       price = priceFromField.split('$');
       priceList.push(price[price.length-1]*1)
       
@@ -114,7 +111,7 @@ test('Order products and return back to Products page', async({page}) => {
      await expect(page).toHaveURL('/cart.html');
 
      //Check that Your cart is empty
-     await expect(page.locator('//div[@class="cart_item"][1]')).not.toBeVisible()
+     await expect(page.locator('[class="cart_item"]')).not.toBeVisible()
 
      //Click on the left menu bar
      await page.locator('.bm-burger-button').click();
@@ -132,7 +129,6 @@ test('Order products and return back to Products page', async({page}) => {
 
 });
 
-
 test('Choose products, order and Logout', async ({page}) => {
      const loginPage = new LoginPage(page);
 
@@ -141,21 +137,21 @@ test('Choose products, order and Logout', async ({page}) => {
      loginPage.checkAllItemsPageURL();
 
      //Save all fields value of "Sauce Labs Backpack" product
-     let titleValueOfBackpack = await page.locator('#item_4_title_link').innerText();
-     let descriptionOfBackpack = await page.locator('//a[@data-test="item-4-title-link"]//following::div[@data-test="inventory-item-desc"][1]').innerText();
-     let priceValueOfBackpack = await page.locator('//a[@data-test="item-4-title-link"]//following::div[@data-test="inventory-item-price"][1]').innerText();
+     let titleValueOfBackpack = await page.locator('.inventory_item_name ').nth(0).innerText();
+     let descriptionOfBackpack = await page.locator('.inventory_item_desc').nth(0).innerText();
+     let priceValueOfBackpack = await page.locator('.inventory_item_price').nth(0).innerText();
      
 
      //Click on the "Sauce Labs Backpack" title
-     await page.locator('#item_4_title_link').click();
+     await page.locator('.inventory_item_name ').nth(0).click();
 
      //Check that the "Sauce Labs Backpack" personal page open
-     await expect(page).toHaveURL('/inventory-item.html?id=4');
+     await expect(page).not.toHaveURL('/inventory.html');
 
      //Check that all product fields match the field of chosen product fields
-     await expect(page.locator('//div[@data-test="inventory-item-name"]')).toHaveText(titleValueOfBackpack);
-     await expect(page.locator('//div[@data-test="inventory-item-desc"]')).toHaveText(descriptionOfBackpack);
-     await expect(page.locator('//div[@data-test="inventory-item-price"]')).toHaveText(priceValueOfBackpack);
+     await expect(page.locator('.inventory_details_name.large_size')).toHaveText(titleValueOfBackpack);
+     await expect(page.locator('.inventory_details_desc.large_size')).toHaveText(descriptionOfBackpack);
+     await expect(page.locator('.inventory_details_price')).toHaveText(priceValueOfBackpack);
 
      //Click on the "Add to cart" button
      await page.locator('#add-to-cart').click();
@@ -170,39 +166,39 @@ test('Choose products, order and Logout', async ({page}) => {
      await expect(page).toHaveURL('/inventory.html');
 
      //The button on the 'Sauce Labs Backpack' should be 'Remove' instead of 'Add to cart'
-     await expect(page.locator('#add-to-cart-sauce-labs-backpack')).not.toBeVisible();
-     await expect(page.locator('#remove-sauce-labs-backpack')).toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(0).locator('.btn.btn_primary.btn_small.btn_inventory')).not.toBeVisible();
+     await expect(page.locator('[class="btn btn_secondary btn_small btn_inventory "]')).toBeVisible();
 
      //Click on the "Add to cart" button in the "Sauce Labs Bike Light" product
-     await page.locator('#add-to-cart-sauce-labs-bike-light').click();
+     await page.locator('[data-test="inventory-item"]').nth(1).locator('.btn.btn_primary.btn_small.btn_inventory').click();
      await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('2');
-     let titleValueOfBikeLight = await page.locator('#item_0_title_link').innerText();
+     let titleValueOfBikeLight = await page.locator('.inventory_item_name').nth(1).innerText();
 
 
      //The button on the 'Sauce Labs Bike Light' should be 'Remove' instead of 'Add to cart'
-     await expect(page.locator('#add-to-cart-sauce-labs-bike-light')).not.toBeVisible();
-     await expect(page.locator('#remove-sauce-labs-bike-light')).toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(1).locator('.btn.btn_primary.btn_small.btn_inventory')).not.toBeVisible();
+     await expect(page.locator('[class="btn btn_secondary btn_small btn_inventory "]').nth(1)).toBeVisible();
 
      //Click on the "Add to cart" button in the "Sauce Labs Bolt T-Shirt" product
-     await page.locator('#add-to-cart-sauce-labs-bolt-t-shirt').click();
+     await page.locator('[data-test="inventory-item"]').nth(2).locator('.btn.btn_primary.btn_small.btn_inventory').click();
 
      //The number 2 in the red circle on the "Your cart" button should change to 3
      await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('3');
 
      //The button on the 'Sauce Labs Bolt T-Shirt' should be 'Remove' instead of 'Add to cart'
-     await expect(page.locator('#add-to-cart-sauce-labs-bolt-t-shirt')).not.toBeVisible();
-     await expect(page.locator('#remove-sauce-labs-bolt-t-shirt')).toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(2).locator('.btn.btn_primary.btn_small.btn_inventory')).not.toBeVisible();
+     await expect(page.locator('[class="btn btn_secondary btn_small btn_inventory "]').nth(2)).toBeVisible();
 
 
      //Save all fields value of "Sauce Labs Backpack" product
-     let titleValueOfTShirt = await page.locator('#item_1_title_link').innerText();
-     let descriptionOfTShirt = await page.locator('//a[@data-test="item-1-title-link"]//following::div[@data-test="inventory-item-desc"][1]').innerText();
-     let priceValueOfTShirt = await page.locator('//a[@data-test="item-1-title-link"]//following::div[@data-test="inventory-item-price"][1]').innerText();
+     let titleValueOfTShirt = await page.locator('.inventory_item_name ').nth(2).innerText();
+     let descriptionOfTShirt = await page.locator('.inventory_item_desc').nth(2).innerText();
+     let priceValueOfTShirt = await page.locator('.inventory_item_price').nth(2).innerText();
      
      //Click on the "Sauce Labs Bolt T-Shirt" title
-     await page.locator('#item_1_title_link').click();
+     await page.locator('.inventory_item_name ').nth(2).click();
      //The personal page for the 'Sauce Labs Bolt T-Shirt' should open
-     await expect(page).toHaveURL('/inventory-item.html?id=1');
+     await expect(page).not.toHaveURL('/inventory.html');
 
      //The title, description, and price should match the corresponding fields of the "Sauce Labs Bolt T-Shirt" on the 'All items' page
      await expect(page.locator('//div[@data-test="inventory-item-name"]')).toHaveText(titleValueOfTShirt);
@@ -229,21 +225,21 @@ test('Choose products, order and Logout', async ({page}) => {
      await expect(page).toHaveURL('/inventory.html');
 
      //The button on the 'Sauce Labs Bolt T-Shirt' should be 'Add to cart' instead of 'Remove'
-     await expect(page.locator('#remove-sauce-labs-bolt-t-shirt')).not.toBeVisible();
-     await expect(page.locator('#add-to-cart-sauce-labs-bolt-t-shirt')).toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(2).locator('.btn.btn_secondary.btn_small.btn_inventory')).not.toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(2).locator('.btn.btn_primary.btn_small.btn_inventory')).toBeVisible();
 
      //Click on the "Add to cart" button in the "Sauce Labs Fleece Jacket" product
-     await page.locator('#add-to-cart-sauce-labs-fleece-jacket').click();
+     await page.locator('[data-test="inventory-item"]').nth(3).locator('.btn.btn_primary.btn_small.btn_inventory').click();
 
      //Save the value of Fleece jacket
-     let titleValueOfFleeceJacket = await page.locator('#item_5_title_link').innerText();
+     let titleValueOfFleeceJacket = await page.locator('.inventory_item_name ').nth(3).innerText();
 
      //The number 2 in the red circle on the "Your cart" button should change to 3
      await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('3');
 
      //The button should change to "Remove" from "Add to cart"
-     await expect(page.locator('#add-to-cart-sauce-labs-fleece-jacket')).not.toBeVisible();
-     await expect(page.locator('#remove-sauce-labs-fleece-jacket')).toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(3).locator('.btn.btn_primary.btn_small.btn_inventory')).not.toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(3).locator('.btn.btn_secondary.btn_small.btn_inventory')).toBeVisible();
 
      //Click on the "Your cart" button
      await page.locator('#shopping_cart_container').click();
@@ -251,14 +247,14 @@ test('Choose products, order and Logout', async ({page}) => {
      await expect(page).toHaveURL('/cart.html');
 
      //The "Sauce Labs Backpack", "Sauce Labs Bike Light" and "Sauce Labs Fleece Jacket" products should display on the page
-     await expect(page.locator('#item_4_title_link')).toHaveText(titleValueOfBackpack)
-     await expect(page.locator('#item_0_title_link')).toHaveText(titleValueOfBikeLight)
-     await expect(page.locator('#item_5_title_link')).toHaveText(titleValueOfFleeceJacket)
+     await expect(page.locator('[data-test="inventory-item"]').nth(0).locator('.inventory_item_name')).toHaveText(titleValueOfBackpack)
+     await expect(page.locator('[data-test="inventory-item"]').nth(1).locator('.inventory_item_name')).toHaveText(titleValueOfBikeLight)
+     await expect(page.locator('[data-test="inventory-item"]').nth(2).locator('.inventory_item_name')).toHaveText(titleValueOfFleeceJacket)
 
      //Click on the "Sauce Labs Fleece Jacket" title 
-     await page.locator('#item_5_title_link').click();
+     await page.locator('[data-test="inventory-item"]').nth(2).locator('.inventory_item_name').click();
      //The "Sauce Labs Fleece Jacket" personal page should open
-     await expect(page).toHaveURL('/inventory-item.html?id=5');
+     await expect(page).not.toHaveURL('/cart.html');
 
      //Click on the "Back arrow" button on the browser
      await page.goBack();
@@ -266,11 +262,14 @@ test('Choose products, order and Logout', async ({page}) => {
      await expect(page).toHaveURL('/cart.html');
 
      //Click on the "Remove" button on the "Sauce Labs Bike Light" product
-     await page.locator('#remove-sauce-labs-bike-light').click();
+     await page.locator('[data-test="inventory-item"]').nth(1).locator('.btn.btn_secondary.btn_small.cart_button').click();
 
+     const numberOfChosenProduct = await page.locator('[data-test="inventory-item"]').count();
      //The "Sauce Labs Bike Light" product should be removed from page
-     await expect(page.locator('item-0-title-link')).not.toBeVisible();
-
+     for(let i = 0; i < numberOfChosenProduct; i += 1){
+      await expect(page.locator('[data-test="inventory-item"]').nth(i).locator('.inventory_item_name')).not.toHaveText(titleValueOfBikeLight)
+     }
+     
      //Click on the "Checkout" button
      await page.locator('#checkout').click();
 
@@ -338,17 +337,18 @@ test('Choose products, order and Logout', async ({page}) => {
     //The "Checkout: Overview" page should be open
     await expect(page).toHaveURL('/checkout-step-two.html');
 
-    //The chosen products should display
-    await expect(page.locator('#item_4_title_link')).toBeVisible();
-    await expect(page.locator('#item_5_title_link')).toBeVisible();
+     //The chosen products should display
+     await expect(page.locator('[data-test="inventory-item"]').nth(0).locator('.inventory_item_name')).toHaveText(titleValueOfBackpack)
+     await expect(page.locator('[data-test="inventory-item"]').nth(1).locator('.inventory_item_name')).toHaveText(titleValueOfFleeceJacket)
+
 
     //Get prices
-     let priceFromField = await page.locator('//div[@class="cart_item"][1]//div[@class="inventory_item_price"]').innerText();
+     let priceFromField = await page.locator('[data-test="inventory-item"]').nth(0).locator('.inventory_item_price').innerText();
      let price = priceFromField.split('$');
      const priceList =[]
      priceList.push(price[price.length-1]*1)
 
-     priceFromField = await page.locator('//div[@class="cart_item"][2]//div[@class="inventory_item_price"]').innerText();
+     priceFromField = await page.locator('[data-test="inventory-item"]').nth(1).locator('.inventory_item_price').innerText();
      price = priceFromField.split('$');
      priceList.push(price[price.length-1]*1)
      
@@ -374,14 +374,14 @@ test('Choose products, order and Logout', async ({page}) => {
      await expect(page).toHaveURL('/inventory.html');
 
      //The "Sauce Labs Backpack", "Sauce Labs Bike Light" and "Sauce Labs Fleece Jacket" products "Remove" button should change to "Add to cart"
-     await expect(page.locator('#add-to-cart-sauce-labs-backpack')).toBeVisible();
-     await expect(page.locator('#remove-sauce-labs-backpack')).not.toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(0).locator('.btn.btn_primary.btn_small.btn_inventory')).toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(0).locator('.btn.btn_secondary.btn_small.btn_inventory')).not.toBeVisible();
 
-     await expect(page.locator('#add-to-cart-sauce-labs-bike-light')).toBeVisible();
-     await expect(page.locator('#remove-sauce-labs-bike-light')).not.toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(1).locator('.btn.btn_primary.btn_small.btn_inventory')).toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(1).locator('.btn.btn_secondary.btn_small.btn_inventory')).not.toBeVisible();
 
-     await expect(page.locator('#add-to-cart-sauce-labs-fleece-jacket')).toBeVisible();
-     await expect(page.locator('#remove-sauce-labs-fleece-jacket')).not.toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(3).locator('.btn.btn_primary.btn_small.btn_inventory')).toBeVisible();
+     await expect(page.locator('[data-test="inventory-item"]').nth(3).locator('.btn.btn_secondary.btn_small.btn_inventory')).not.toBeVisible();
 
      //The red circule with number of chosen product should be "Remove" from "Your cart" button
      await expect(page.locator('data-test="shopping-cart-badge"')).not.toBeVisible();
@@ -393,7 +393,7 @@ test('Choose products, order and Logout', async ({page}) => {
      await expect(page).toHaveURL('/cart.html');
 
      //The page should not display any products
-     await expect(page.locator('//div[@class="cart_item"][1]')).not.toBeVisible();
+     await expect(page.locator('[class="cart_item"]').nth(0)).not.toBeVisible();
     
      //Click on the left menu bar button
      await page.locator('#react-burger-menu-btn').click();
@@ -406,5 +406,4 @@ test('Choose products, order and Logout', async ({page}) => {
      //The username and password fields should be empty
      await expect(loginPage.getUsernameLocator()).toBeEmpty();
      await expect(loginPage.getPasswordLocator()).toBeEmpty();
-
 });

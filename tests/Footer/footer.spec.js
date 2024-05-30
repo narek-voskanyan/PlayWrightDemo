@@ -24,7 +24,6 @@ test('Verify that three social media webpage links, Twitter, Facebook, Linkedin,
     
   });
 
-
   test('Verify that clicking on the Twitter link switches to the Sauce Labs Twitter profile', async ({ page }) => {
 
     const footer = new Footer(page);
@@ -38,7 +37,6 @@ test('Verify that three social media webpage links, Twitter, Facebook, Linkedin,
     await expect(newPage).toHaveURL('https://x.com/saucelabs');
    
   });
-
 
   test('Verify that clicking on the Facebook link switches to the Sauce Labs Facebook profile', async ({ page }) => {
     
@@ -55,8 +53,6 @@ test('Verify that three social media webpage links, Twitter, Facebook, Linkedin,
    
   });
     
-    
-
   test('Verify that clicking on the Likedin link switches to the Sauce Labs Likedin profile', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
@@ -81,7 +77,6 @@ test('Verify that three social media webpage links, Twitter, Facebook, Linkedin,
 
    
   });
-
 
   test('Verify that the "© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy" text exist', async ({ page }) => {
     

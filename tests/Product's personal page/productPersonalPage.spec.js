@@ -12,13 +12,8 @@ test('Verify that the product information on the personal page matches the infor
     const global = new GlobalPageObjectModel(page);
     const personalPage = new ProductPersonalPage(page);
   
-    //Create variable for product photo locator
-    const locetorForProductPhoto = await page.locator('//img[@alt="Sauce Labs Backpack"]');
-    //Get value from photo element "Alt" attribute
-    const productPhotoAltValue = await locetorForProductPhoto.getAttribute('alt');
-
     //Click on title chosen product for open product personal page
-    await page.locator('//a[@id="item_4_title_link"]//div[1]').click();
+    await page.locator('.inventory_item_name ').nth(0).click();
 
     //Check that page open
     await global.checkURL('/inventory-item.html?id=4');
@@ -46,11 +41,10 @@ test('Verify that the product information on the personal page matches the infor
 
   });
 
-
   test('Verify that the "Back to products" referenc functions as expected', async ({ page }) => {
 
     //Click on title chosen product for open product personal page
-    await page.locator('//a[@id="item_4_title_link"]//div[1]').click();
+    await page.locator('.inventory_item_name ').nth(0).click();
 
     //Check that page open
     await expect(page).toHaveURL('/inventory-item.html?id=4');
@@ -62,33 +56,31 @@ test('Verify that the product information on the personal page matches the infor
 
   });
 
-
-  
   test('Verify that the text on the "Add to Cart" button changes to "Remove" after clicking on it, and returns to the original text after a second click', async ({ page }) => {
 
     //Click on title chosen product for open product personal page
-    await page.locator('//a[@id="item_4_title_link"]//div[1]').click();
+    await page.locator('.inventory_item_name ').nth(0).click();
 
     //Check that page open
     await expect(page).toHaveURL('/inventory-item.html?id=4');
    //Check that written on puton is "Add to cart" 
-    await expect(page.locator('//button[@class="btn btn_primary btn_small btn_inventory"]').getByText("Add to cart")).toBeVisible();
+    await expect(page.locator('[class="btn btn_primary btn_small btn_inventory"]').getByText("Add to cart")).toBeVisible();
 
     //Click on button
-     await page.locator('//button[@class="btn btn_primary btn_small btn_inventory"]').click();
+     await page.locator('[class="btn btn_primary btn_small btn_inventory"]').click();
 
     //Check that written on button hide
-    await expect(page.locator('//button[@class="btn btn_primary btn_small btn_inventory"]').getByText("Add to cart")).not.toBeVisible();
+    await expect(page.locator('[class="btn btn_primary btn_small btn_inventory"]').getByText("Add to cart")).not.toBeVisible();
     
     //Check that written on button is "Removet" 
-    await expect(page.locator('//button[@class="btn btn_secondary btn_small btn_inventory"]').getByText("Remove")).toBeVisible();
+    await expect(page.locator('[class="btn btn_secondary btn_small btn_inventory"]').getByText("Remove")).toBeVisible();
 
     //Click on "Remove" button
-    await page.locator('//button[@class="btn btn_secondary btn_small btn_inventory"]').click();
+    await page.locator('[class="btn btn_secondary btn_small btn_inventory"]').click();
 
     //Check that written on button hide 
-    await expect(page.locator('//button[@id="remove-sauce-labs-backpack"]').getByText("Remove")).not.toBeVisible();
+    await expect(page.locator('[id="remove-sauce-labs-backpack"]').getByText("Remove")).not.toBeVisible();
     //Check that written on puton is "Add to cart" 
-    await expect(page.locator('//button[@class="btn btn_primary btn_small btn_inventory"]').getByText("Add to cart")).toBeVisible();
+    await expect(page.locator('[class="btn btn_primary btn_small btn_inventory"]').getByText("Add to cart")).toBeVisible();
 
   });

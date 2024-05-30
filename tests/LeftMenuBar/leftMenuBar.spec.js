@@ -38,7 +38,6 @@ test('Verify that the "X" icon closes the "Left Menu Bar"', async ({ page }) => 
 
   });
 
-
   test('Verify that the "Logout" menu item logs the user out to the "Login" page.', async ({ page }) => {
     
     // Perform authentication steps. Sign in valid user account.
@@ -85,7 +84,6 @@ test('Verify that the "X" icon closes the "Left Menu Bar"', async ({ page }) => 
     //Check that correspond page opens
     await loginPage.checkAllItemsPageURL();
   });
-
 
   test('"Verify that the "Reset App State" menu item removes all items from "Your Cart"', async ({ page }) => {
     const leftMenuBarPage = new LaftMenuBarPage(page);

@@ -56,7 +56,6 @@ if(USERNAME === "locked_out_user"){
    
   });
 
-
   test('Verfy that is not posible to sign in with valid username by using uppercases', async ({ page }) => {
     const loginPage = new LoginPage(page);
 
@@ -65,16 +64,13 @@ if(USERNAME === "locked_out_user"){
     await loginPage.fillUsernameField("Standard_user");
     await loginPage.fillPasswordfield(PASSWORD);
     await loginPage.clickLoginButton();
-    
-
-
+ 
     await expect(page.getByText(WrongUsernameOrPasswordMessage)).toBeVisible();
 
     // Check that with correct password and username the bage is opening
     await expect(page).toHaveURL('https://www.saucedemo.com/'); 
    
   });
-
 
   test('Verfy that is not posible to sign in with valid password by using uppercases', async ({ page }) => {
     const loginPage = new LoginPage(page);
@@ -109,7 +105,6 @@ if(USERNAME === "locked_out_user"){
    
   });
 
-
   test('Verfy that is not posible to Login with correct username and empty password', async ({ page }) => {
     const loginPage = new LoginPage(page);
     // Perform authentication steps. Sign in valid user account.
@@ -124,7 +119,6 @@ if(USERNAME === "locked_out_user"){
     await expect(page).toHaveURL('https://www.saucedemo.com/'); 
    
   });
-
 
   test('Verify that is not possible to Login with correct username and incorrect password', async ({ page }) => {
     const loginPage = new LoginPage(page);
@@ -158,7 +152,6 @@ if(USERNAME === "locked_out_user"){
     await expect(page).toHaveURL('https://www.saucedemo.com/');
   });
 
-
   test('Verify that "X" button on the error message field close the error message.', async ({ page }) => {
     const loginPage = new LoginPage(page);
     // Perform authentication steps. Sign in valid user account.
@@ -187,7 +180,6 @@ if(USERNAME === "locked_out_user"){
 
 }
 test('Verify that username text box is not alowing exceeding maximum length', async ({page}) => {
-
   const loginPage = new LoginPage(page);
   await loginPage.goto();
   await loginPage.fillUsernameField(USERNAME);
